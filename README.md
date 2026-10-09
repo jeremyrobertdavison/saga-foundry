@@ -2,13 +2,13 @@
 
 SAGA is a standalone superhero roleplaying game system for **Foundry VTT 14**. It includes the SAGA character creator, native character sheets, and Play Mode. It does not require Simple Worldbuilding, the SAGA Character Studio module, Google AI Studio, or an AI API key.
 
-**Version 0.1.1 is an experimental first release.** World creation, character creation, sheet opening, and Play Mode were successfully tested by the maintainer on Foundry 14.368. The new sheet-roll buttons still require a live check. Use a new test world before moving a campaign. Foundry 13 is not supported by this package.
+**Version 0.1.2 is an experimental first release.** World creation, character creation, sheet opening, and Play Mode were successfully tested by the maintainer on Foundry 14.368. The new sheet condition/Heroism controls and token labels require live acceptance checks. Use a new test world before moving a campaign. Foundry 13 is not supported by this package.
 
 ## Features
 
 - Guided character creation: details, attributes, skills, powers, and weaknesses.
 - Save directly to Foundry Actors; reopen the same Actor with **Edit Character**.
-- Click attributes, skills, or powers on the sheet to roll the displayed formula in Foundry chat. These are base rolls; use Play Mode for automatic condition modifiers and Heroism tracking.
+- Click attributes, skills, or powers on the sheet to roll the displayed formula in Foundry chat. Sheet rolls and Play Mode share automatic condition modifiers and Heroism tracking.
 - **Play Mode** from the character sheet, with Foundry chat rolls, Heroism, conditions, and roll history.
 - Attribute checks roll only their die. Skills and powers roll their die plus linked attribute points.
 - Existing creator themes, rules reference, read-aloud support, and `.sagaChar`, text, and PNG exports.
@@ -55,7 +55,17 @@ The importer creates a new Actor with a new ID and gives the importing user owne
 
 The original export is retained in `system.legacyBackup.source`. Item names, images, descriptions, and quantities become basic SAGA items; each item's original data is retained in its backup. Old active effects, sheet assignments, folder links, and system-specific item behavior are not activated. They remain in the source backup for manual review. Importing does not migrate scenes, journals, compendiums, macros, or world settings.
 
-Dice tiers do not uniquely identify point allocations. Legacy formulas cannot supply missing level, skill links, or point totals reliably, so the importer does not guess. Legacy roll buttons roll their stored formula only; they do not apply Play Mode conditions or award Heroism.
+Dice tiers do not uniquely identify point allocations. Legacy formulas cannot supply missing level, skill links, or point totals reliably, so the importer does not guess. Legacy roll buttons apply Injured/Empowered modifiers and award Heroism on main-die critical results. Without a complete build, the Heroism cap defaults to 3 until the level is known.
+
+## Conditions and Heroism on the character sheet
+
+Owners and the GM can choose a condition, read its effect, and click **Apply condition**. Each active condition shows its description and a **Remove** button. Applying a new Injured or Empowered tier replaces the previous tier of that condition. Other players with Observer access can read the sheet but cannot change it.
+
+Small condition labels appear beneath map tokens, below the token name when visible. Labels track Actor updates on each connected client, refresh when a scene loads, and disappear when the last condition is removed. Hidden or unseen tokens do not reveal labels to players. Linked tokens share their world Actor's state; an unlinked token uses its own Actor state.
+
+**Use 1 Heroism** deducts one point, stopping at zero. **Gain 1 Heroism** adds one point up to `max(3, 2 × level)`. A natural 1 or the maximum result on the main die automatically grants one point for rolls made through the SAGA sheet or Play Mode, including Free Dice. The attribute modifier and condition dice do not determine a critical, and each roll awards at most one point. Guilty blocks gains; Guilt-Ridden blocks spending. Spending records the resource cost; apply the chosen narrative benefit at the table.
+
+Sheet and Play Mode share the same stored play state. Sheet rolls now apply Injured/Empowered modifiers, and Power Dampened blocks power rolls. Other conditional or narrative effects are shown as reminders, not automatic movement/turn/action enforcement. Generic `/r` chat rolls and third-party macro rolls are not automatically attributed to a SAGA character and do not award Heroism.
 
 ## Rules and current limits
 
@@ -63,7 +73,7 @@ Attribute, skill, and power pools are respectively 5, 6, and 5 points per level.
 
 SAGA uses narrative turn order. Manage turns manually; the system does not supply a SAGA initiative roll. Optional health and power fields are generic campaign trackers, not new SAGA rules.
 
-The creator edits world Actors. Use linked tokens; editing an unlinked token's independent build or Play Mode state is not supported in this release. Actor-level condition lists are not automatically synchronized to Foundry token status icons. Generic items have no automatic equipment or combat effects.
+The creator edits world Actors. Use linked tokens; editing an unlinked token's build in the creator or opening its Play Mode is not supported. Its native sheet can manage its own conditions, Heroism, and rolls. Actor-level conditions appear as small labels below visible tokens and disappear when removed. They do not create Foundry status-effect icons. Generic items have no automatic equipment or combat effects.
 
 The React creator runs inside a local iframe. It loads bundled assets through `srcdoc` so Foundry 14 serving HTML as plain text does not display source code instead of the app. It uses no hosted AI service. Browser read-aloud support depends on available browser voices.
 

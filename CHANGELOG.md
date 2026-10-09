@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2
+
+- Apply and remove conditions with effect descriptions directly on the character sheet.
+- Show small condition labels below visible map tokens; clear them when conditions are removed.
+- Add sheet Heroism counter, gain and spend buttons, cap/zero checks, and condition restrictions.
+- Automatically award Heroism for natural minimum/maximum main-die rolls from sheets and Play Mode.
+- Share condition and Heroism updates with open Play Mode windows; remove duplicate frontend critical awards.
+- Apply condition roll modifiers and Power Dampened restrictions to sheet rolls.
+
+
 ## 0.1.1
 
 - Declare compatibility verified on Foundry 14.368 following maintainer testing, fixing omission from world creation.

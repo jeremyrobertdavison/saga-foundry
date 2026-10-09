@@ -2,7 +2,7 @@
   "id": "saga",
   "title": "SAGA",
   "description": "SAGA superhero roleplaying: character creation, native sheets and Play Mode.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "compatibility": {
     "minimum": "14",
     "verified": "14.368",
@@ -39,7 +39,7 @@
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/jeremyrobertdavison/saga-foundry",
   "manifest": "https://github.com/jeremyrobertdavison/saga-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/jeremyrobertdavison/saga-foundry/releases/download/v0.1.1/saga-v0.1.1.zip",
+  "download": "https://github.com/jeremyrobertdavison/saga-foundry/releases/download/v0.1.2/saga-v0.1.2.zip",
   "languages": [
     {
       "lang": "en",

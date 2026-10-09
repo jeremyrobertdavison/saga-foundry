@@ -1,3 +1,5 @@
+import {readSession,adjustHeroism,toggleCondition,resetSession,replaceSession,rollActor} from './play.mjs';
+import {ALL_CONDITIONS,CONDITION_DESCRIPTIONS} from './conditions.mjs';
 import {creatorDocument} from './frame.mjs';
 import {ID,validate,project,legacy,conditionFormula,normalize} from './rules.mjs';
 const sessions=new Map();
@@ -64,8 +66,14 @@ export const api={
   s.base=stamp(a);ui.notifications.info(`Saved ${a.name}`);return {id:a.id,name:a.name,character:c};
  }finally{s.busy=false;}},
  session(key){const s=getSession(key);return s.actorId?copy(owned(s.actorId).system.session||{heroism:1,conditions:[],rolls:[]}):{heroism:1,conditions:[],rolls:[]};},
- async setSession(key,data,expected){const s=getSession(key);if(!s.actorId)throw Error('Save the character to Foundry before using Play Mode.');const a=owned(s.actorId);const current=a.system.session||{heroism:1,conditions:[],rolls:[]};if(JSON.stringify(current)!==JSON.stringify(expected))throw Error('Play state changed in another window. Return to Summary, then reopen Play Mode.');await a.update({'system.session':copy(data)});},
- async roll(key,label,die,modifier,conditions,flat){const s=getSession(key);if(!s.actorId)throw Error('Save the character to Foundry before rolling.');const a=owned(s.actorId);if(!/^1d(4|6|8|10|12|20|100)$/.test(die)||!Number.isFinite(modifier))throw Error('Invalid roll.');const r=await new foundry.dice.Roll(`${die}+${modifier}${flat?'':conditionFormula(conditions)}`).evaluate();await r.toMessage({speaker:chatClass().getSpeaker({actor:a}),flavor:escape(label)}, {rollMode:game.settings.get('core','rollMode')});return {total:r.total,dieRoll:r.dice[0].results[0].result,dieMax:r.dice[0].faces,formula:r.formula};}
+ conditions(){return {names:[...ALL_CONDITIONS],descriptions:{...CONDITION_DESCRIPTIONS}};},
+ async setSession(key,data,expected){const s=getSession(key);if(!s.actorId)throw Error('Save the character before using Play Mode.');return replaceSession(owned(s.actorId),data,expected);},
+ changeHeroism(key,amount){return adjustHeroism(owned(getSession(key).actorId),amount);},
+ toggleCondition(key,condition){return toggleCondition(owned(getSession(key).actorId),condition);},
+ resetSession(key){return resetSession(owned(getSession(key).actorId));},
+ subscribeSession(key,callback){const id=HooksAPI.on('updateActor',a=>{const state=sessions.get(key);if(state?.actorId===a.id&&a.isOwner)callback(readSession(a));});return ()=>HooksAPI.off('updateActor',id);},
+ async roll(key,label,die,modifier,_conditions,flat,group=''){const s=getSession(key);if(!s.actorId)throw Error('Save the character before rolling.');if(!/^1d(4|6|8|10|12|20|100)$/.test(die)||!Number.isFinite(modifier))throw Error('Invalid roll.');return rollActor(owned(s.actorId),{label,formula:modifier?`${die}+${modifier}`:die,group,applyConditions:!flat});}
+
 };
 HooksAPI.once('ready',()=>{game.saga=api;});
 function button(_app,html){if(game.system.id!=='saga')return;const el=html?.nodeType===1?html:html?.[0]??_app.element;if(!el||el.querySelector('.saga-launch'))return;const target=el.querySelector('.directory-header')||el;const b=document.createElement('button');b.type='button';b.className='saga-launch';b.textContent='SAGA Character Studio';b.onclick=()=>api.open();target.append(b);}

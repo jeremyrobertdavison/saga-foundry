@@ -23,9 +23,9 @@ test('creation permissions and session conflicts',async()=>{api.open();const key
 
 test('v14 namespaced dice and chat APIs preserve roll mode and attribute formula',async()=>{
  let sent;foundry.dice={Roll:class{constructor(formula){this.formula=formula;this.total=4;this.dice=[{faces:6,results:[{result:4}]}];}async evaluate(){return this;}async toMessage(data,options){sent={data,options};}}};
- foundry.documents.ChatMessage={getSpeaker:({actor})=>({actor:actor.id})};game.settings={get:()=> 'gmroll'};
+ foundry.documents.ChatMessage={getSpeaker:({actor})=>({actor:actor.id})};globalThis.CONFIG={ChatMessage:{documentClass:foundry.documents.ChatMessage}};game.settings={get:()=> 'gmroll'};
  api.open();const key=lastWindow.key;api.load(key,[...actors.values()][0].id);
- const r=await api.roll(key,'Mind','1d6',0,[],false);assert.equal(r.formula,'1d6+0');assert.equal(sent.options.rollMode,'gmroll');
+ const r=await api.roll(key,'Mind','1d6',0,[],false);assert.equal(r.formula,'1d6');assert.equal(sent.options.rollMode,'gmroll');
  assert.equal(globalThis.Roll,undefined);assert.equal(globalThis.Actor,undefined);assert.equal(globalThis.ChatMessage,undefined);
 });
 test('launcher consumes a text/plain response and gives the iframe its session',async()=>{

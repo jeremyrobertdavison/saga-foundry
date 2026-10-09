@@ -1,3 +1,4 @@
+import {registerConditionLabels} from './token-labels.mjs';
 import {SagaCharacterData,SagaItemData} from './models.mjs';
 import {SagaActorSheet,SagaItemSheet} from './sheets.mjs';
 import {api} from './studio.mjs';
@@ -21,3 +22,5 @@ Hooks.on('renderActorDirectory',(app,html)=>{
  b.onclick=()=>{const input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=async()=>{if(!input.files[0])return;try{await importActorFile(input.files[0]);}catch(e){ui.notifications.error(e.message);}};input.click();};
  (root.querySelector('.directory-header')||root).append(b);
 });
+
+registerConditionLabels();
