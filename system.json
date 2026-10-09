@@ -1,0 +1,42 @@
+{
+  "id": "saga",
+  "title": "SAGA",
+  "description": "SAGA superhero roleplaying: character creation, native sheets and Play Mode.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Jeremy Robert Davison"
+    }
+  ],
+  "esmodules": [
+    "scripts/system.mjs"
+  ],
+  "styles": [
+    "styles.css"
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [
+          "biography"
+        ]
+      }
+    },
+    "Item": {
+      "item": {
+        "htmlFields": [
+          "description"
+        ]
+      }
+    }
+  },
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power",
+  "url": "https://github.com/jeremyrobertdavison/saga-foundry",
+  "manifest": "https://github.com/jeremyrobertdavison/saga-foundry/releases/latest/download/system.json",
+  "download": "https://github.com/jeremyrobertdavison/saga-foundry/releases/download/v0.1.0/saga-v0.1.0.zip"
+}

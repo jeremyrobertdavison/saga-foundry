@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGA - Character Creator</title>
+    
+    
+    
+    
+    <style>
+      :root {
+        /* Default Styles (Root) */
+        --bg-app: #0f172a;
+        --bg-container: #1e293b;
+        --bg-card: #334155;
+        --bg-input: #1e293b;
+        --bg-nav-active: #0284c7;
+        --text-primary: #f1f5f9;
+        --text-accent: #38bdf8;
+        --text-accent-alt: #0ea5e9;
+        --border-color: #475569;
+        --btn-from: #3b82f6;
+        --btn-from-hover: #2563eb;
+        --btn-to: #1d4ed8;
+        --btn-to-hover: #1e40af;
+        --btn-secondary: #0ea5e9;
+        --btn-secondary-hover: #0284c7;
+        --neon-glow: rgba(56, 189, 248, 0.4);
+        --scrollbar-track: #1e293b;
+        --scrollbar-thumb: #475569;
+      }
+
+      .theme-neon-city {
+        --bg-app: #0b1120; --bg-container: #1e293b; --bg-card: #293548; --bg-input: #1e293b; --bg-nav-active: #0ea5e9; --text-primary: #f1f5f9; --text-accent: #7dd3fc; --text-accent-alt: #38bdf8; --border-color: #334155; --btn-from: #7c3aed; --btn-from-hover: #6d28d9; --btn-to: #4f46e5; --btn-to-hover: #4338ca; --btn-secondary: #0ea5e9; --btn-secondary-hover: #0284c7; --neon-glow: rgba(192, 132, 252, 0.4);
+      }
+      .theme-high-contrast {
+        --bg-app: #000000; --bg-container: #000000; --bg-card: #111111; --bg-input: #000000; --bg-nav-active: #4b4b4b; --text-primary: #ffffff; --text-accent: #ffff00; --text-accent-alt: #ffffff; --border-color: #ffffff; --btn-from: #4b4b4b; --btn-from-hover: #666666; --btn-to: #4b4b4b; --btn-to-hover: #666666; --btn-secondary: #4b4b4b; --btn-secondary-hover: #666666; --neon-glow: rgba(255, 255, 255, 0.8);
+      }
+      .theme-accessibility {
+        --bg-app: #001f3f; --bg-container: #003366; --bg-card: #004080; --bg-input: #0f3365; --bg-nav-active: #3c8532; --text-primary: #ffffff; --text-accent: #ffdc00; --text-accent-alt: #ffffff; --border-color: #ffffff; --btn-from: #ff851b; --btn-from-hover: #e67700; --btn-to: #ff4136; --btn-to-hover: #e02d1b; --btn-secondary: #2ecc40; --btn-secondary-hover: #25a233; --neon-glow: rgba(255, 255, 255, 0.3);
+      }
+      .theme-hacker {
+        --bg-app: #000000; --bg-container: #000000; --bg-card: #050505; --bg-input: #000000; --bg-nav-active: #008800; --text-primary: #00ff00; --text-accent: #00ff00; --text-accent-alt: #00cc00; --border-color: #00ff00; --btn-from: #004400; --btn-from-hover: #006600; --btn-to: #002200; --btn-to-hover: #003300; --btn-secondary: #288700; --btn-secondary-hover: #34b300; --neon-glow: rgba(0, 255, 0, 0.6);
+      }
+      .theme-just-a-yak {
+        --bg-app: #3e2723; --bg-container: #5d4037; --bg-card: #6d4c41; --bg-input: #5d4037; --bg-nav-active: #795548; --text-primary: #efebe9; --text-accent: #ffb74d; --text-accent-alt: #ffa726; --border-color: #8d6e63; --btn-from: #a1887f; --btn-from-hover: #8d6e63; --btn-to: #795548; --btn-to-hover: #5d4037; --btn-secondary: #ff9800; --btn-secondary-hover: #e68a00; --neon-glow: rgba(255, 183, 77, 0.3);
+      }
+      .theme-and-my-canoe {
+        --bg-app: #1b5e20; --bg-container: #2e7d32; --bg-card: #388e3c; --bg-input: #2e7d32; --bg-nav-active: #2e7d32; --text-primary: #e8f5e9; --text-accent: #81c784; --text-accent-alt: #a5d6a7; --border-color: #4caf50; --btn-from: #66bb6a; --btn-from-hover: #4caf50; --btn-to: #2e7d32; --btn-to-hover: #1b5e20; --btn-secondary: #4fc3f7; --btn-secondary-hover: #29b6f6; --neon-glow: rgba(129, 199, 132, 0.3);
+      }
+      .theme-lotta-cats {
+        --bg-app: #4a148c; --bg-container: #7b1fa2; --bg-card: #8e24aa; --bg-input: #7b1fa2; --bg-nav-active: #9c27b0; --text-primary: #f3e5f5; --text-accent: #f06292; --text-accent-alt: #f48fb1; --border-color: #9c27b0; --btn-from: #ba68c8; --btn-from-hover: #ab47bc; --btn-to: #7b1fa2; --btn-to-hover: #6a1b9a; --btn-secondary: #ea80fc; --btn-secondary-hover: #e160ff; --neon-glow: rgba(240, 98, 146, 0.3);
+      }
+      .theme-medieval-fantasy {
+        --bg-app: #121212; --bg-container: #1e1e1e; --bg-card: #2a2a2a; --bg-input: #1a1a1a; --bg-nav-active: #8b4513; --text-primary: #f5f5dc; --text-accent: #ffd700; --text-accent-alt: #daa520; --border-color: #5c4033; --btn-from: #8b0000; --btn-from-hover: #a52a2a; --btn-to: #4a0000; --btn-to-hover: #5a0000; --btn-secondary: #bda621; --btn-secondary-hover: #a68d1c; --neon-glow: rgba(255, 215, 0, 0.3);
+      }
+      .theme-anime-thing {
+        --bg-app: #1a0b16; --bg-container: #2d142c; --bg-card: #512b58; --bg-input: #2d142c; --bg-nav-active: #c70039; --text-primary: #fee3ec; --text-accent: #f999b7; --text-accent-alt: #f2bed1; --border-color: #f999b7; --btn-from: #f2bed1; --btn-from-hover: #f999b7; --btn-to: #c70039; --btn-to-hover: #900c3f; --btn-secondary: #f999b7; --btn-secondary-hover: #f2bed1; --neon-glow: rgba(249, 153, 183, 0.4);
+      }
+
+      .theme-hacker, .theme-hacker * {
+        font-family: 'Fira Code', 'Courier New', Courier, monospace !important;
+      }
+      .theme-just-a-yak, .theme-just-a-yak h1, .theme-just-a-yak h2 {
+        font-family: 'Rye', cursive !important;
+      }
+      .theme-and-my-canoe, .theme-and-my-canoe h1, .theme-and-my-canoe h2 {
+        font-family: 'Permanent Marker', cursive !important;
+      }
+      .theme-medieval-fantasy, .theme-medieval-fantasy h1, .theme-medieval-fantasy h2 {
+        font-family: 'Cinzel', serif !important;
+      }
+      .theme-medieval-fantasy p, .theme-medieval-fantasy span, .theme-medieval-fantasy div {
+        font-family: 'Almendra', serif;
+      }
+      .theme-anime-thing, .theme-anime-thing h1, .theme-anime-thing h2 {
+        font-family: 'Ma Shan Zheng', cursive !important;
+      }
+      .theme-anime-thing p, .theme-anime-thing span, .theme-anime-thing div {
+        font-family: 'Inter', sans-serif;
+      }
+
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+      ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--text-accent); }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-app);
+        color: var(--text-primary);
+        min-height: 100vh;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .neon-glow-title {
+        text-shadow: 0 0 10px var(--neon-glow), 0 0 20px var(--neon-glow);
+      }
+      .theme-transition {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @keyframes fadeInLeft {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      .animate-fadeInLeft {
+        animation: fadeInLeft 0.5s ease forwards;
+      }
+
+      @keyframes sakuraFall {
+        0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; }
+      }
+      .sakura-petal {
+        position: fixed;
+        background-color: #f999b7;
+        width: 10px;
+        height: 10px;
+        border-radius: 50% 0 50% 50%;
+        pointer-events: none;
+        z-index: 10;
+        animation: sakuraFall linear infinite;
+      }
+
+      .progress-bar-container {
+        width: 100%;
+        height: 6px;
+        background-color: var(--bg-card);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--btn-from), var(--btn-secondary));
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Floating decorations */
+      .floating-cat {
+        position: fixed;
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0.3;
+        font-family: monospace;
+        color: var(--text-accent);
+      }
+    </style>
+    
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

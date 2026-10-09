@@ -1,0 +1,1 @@
+SAGA for Foundry builds on the SAGA Character Creator by Jeremy Davison. Bundled libraries retain their own licenses, included in licenses/. React and ReactDOM power the UI; html2canvas exports PNG sheets; Tailwind generates the bundled styling. Fonts use local fallbacks.
