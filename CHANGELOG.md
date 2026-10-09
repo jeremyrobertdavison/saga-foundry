@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Declare compatibility verified on Foundry 14.368 following maintainer testing, fixing omission from world creation.
+- Click any attribute, skill, or power row to roll its displayed formula in Foundry chat, respecting roll visibility and ownership.
+- Keep condition modifiers and automatic Heroism tracking in Play Mode; sheet rolls use the displayed base formula.
+- Add English Actor and Item type labels.
+
 ## 0.1.0
 
 - First standalone SAGA game system targeting Foundry VTT 14.

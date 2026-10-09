@@ -10,11 +10,15 @@ export class SagaActorSheet extends foundry.applications.sheets.ActorSheetV2 {
   const attrs=c?project(c):a.system.attributes||{};
   const groups=Object.entries(attrs).map(([group,entries])=>{
    if(entries?.value!==undefined)entries={[group]:entries};
-   return `<section><h3>${escape(group==='Attibutes'?'Attributes':group)}</h3><div class="saga-roll-grid">${Object.entries(entries||{}).map(([key,e])=>`<div class="saga-stat"><strong>${escape(e.label||key)}</strong><code>${escape(e.value)}</code>${!c&&owner&&e.dtype==='Formula'?`<button type="button" data-formula="${escape(e.value)}" data-label="${escape(e.label||key)}" title="Roll stored formula">Roll</button>`:''}</div>`).join('')}</div></section>`;
+   return `<section><h3>${escape(group==='Attibutes'?'Attributes':group)}</h3><div class="saga-roll-grid">${Object.entries(entries||{}).map(([key,e])=>{
+    const rollable=e.dtype==='Formula';
+    const contents=`<strong>${escape(e.label||key)}</strong><code>${escape(e.value)}</code>`;
+    return rollable?`<button type="button" class="saga-stat saga-roll" data-formula="${escape(e.value)}" data-label="${escape(e.label||key)}" title="Roll ${escape(e.label||key)}: ${escape(e.value)}" ${owner?'':'disabled'}>${contents}</button>`:`<div class="saga-stat">${contents}</div>`;
+   }).join('')}</div></section>`;
   }).join('');
   root.innerHTML=`<header class="saga-identity"><img src="${escape(a.img)}" alt="Character portrait"><div><small>SAGA • ${c?`LEVEL ${c.level}`:'CHARACTER'}</small><h1>${escape(a.name)}</h1><p>${escape(c?.characterName||'')}</p></div></header>
    ${owner?`<nav>${button(c?'Edit Character':'Open Character Creator','edit')}${c?button('Play Mode','play'):''}</nav>`:''}
-   <p class="saga-note">${c?'Use Play Mode for rolls, Heroism and conditions. Attribute rolls use only their die. Skills and powers add their linked attribute points.':'This character has no complete SAGA build yet. The creator can load a .sagaChar file or walk you through the missing choices. Existing formulas remain available below.'}</p>
+   <p class="saga-note">${c?'Click an attribute, skill or power to roll its displayed formula in chat. Attribute rolls use only their die; skills and powers add their linked attribute points. Use Play Mode for condition modifiers and Heroism tracking.':'This character has no complete SAGA build yet. The creator can load a .sagaChar file or walk you through the missing choices. Existing formulas remain available below.'}</p>
    ${c?`<p><b>Heroism:</b> ${escape(a.system.session?.heroism??1)} / ${Math.max(3,c.level*2)} · <b>Conditions:</b> ${escape(a.system.session?.conditions?.join(', ')||'None')}</p>`:''}
    ${groups}
    ${c?.weaknesses?.length?`<section><h3>Weaknesses</h3>${c.weaknesses.map(w=>`<p><b>${escape(w.name)}</b> (${escape(w.severity)}) — ${escape(w.effect)}</p>`).join('')}</section>`:''}

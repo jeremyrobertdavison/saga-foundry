@@ -2,12 +2,13 @@
 
 SAGA is a standalone superhero roleplaying game system for **Foundry VTT 14**. It includes the SAGA character creator, native character sheets, and Play Mode. It does not require Simple Worldbuilding, the SAGA Character Studio module, Google AI Studio, or an AI API key.
 
-**Version 0.1.0 is an experimental first release.** Automated checks pass, but a live Foundry 14 playtest is still required. Use a new test world before moving a campaign. Foundry 13 is not supported by this package.
+**Version 0.1.1 is an experimental first release.** World creation, character creation, sheet opening, and Play Mode were successfully tested by the maintainer on Foundry 14.368. The new sheet-roll buttons still require a live check. Use a new test world before moving a campaign. Foundry 13 is not supported by this package.
 
 ## Features
 
 - Guided character creation: details, attributes, skills, powers, and weaknesses.
 - Save directly to Foundry Actors; reopen the same Actor with **Edit Character**.
+- Click attributes, skills, or powers on the sheet to roll the displayed formula in Foundry chat. These are base rolls; use Play Mode for automatic condition modifiers and Heroism tracking.
 - **Play Mode** from the character sheet, with Foundry chat rolls, Heroism, conditions, and roll history.
 - Attribute checks roll only their die. Skills and powers roll their die plus linked attribute points.
 - Existing creator themes, rules reference, read-aloud support, and `.sagaChar`, text, and PNG exports.

@@ -1,6 +1,8 @@
-# Validation for 0.1.0
+# Validation for 0.1.1
 
 Completed locally:
+
+- 0.1.1: all eight sample sheet rows exercised in a DOM simulation; correct attribute and linked formulas, actor speaker, roll visibility, read-only restrictions, and unchanged Play Mode state.
 
 - TypeScript check and production creator build.
 - 18 automated tests covering rules, save/reopen/edit, ownership, creation permission, conflicts, Play Mode state, import copies, preservation of source backups, and iframe HTML handling.
@@ -9,7 +11,7 @@ Completed locally:
 - React creator mounts an existing Actor in both edit and Play Mode through the standalone system bridge.
 - Integration APIs checked against Foundry's public v14 documentation.
 
-The automated integration tests use Foundry mocks and DOM simulation, not a running Foundry server. The manifest intentionally does not claim a verified Foundry version. Browser screenshots, real multiplayer sessions, token behavior, server permissions, portrait uploads, and real Foundry schema validation still need live testing.
+The automated integration tests use Foundry mocks and DOM simulation, not a running Foundry server. The maintainer confirmed world creation, character creation, sheet opening, and Play Mode on Foundry 14.368. The manifest now declares that tested build. New sheet rolls still need live confirmation. Browser screenshots, real multiplayer sessions, token behavior, server permissions, portrait uploads, and real Foundry schema validation still need live testing.
 
 ## Live acceptance checklist
 
